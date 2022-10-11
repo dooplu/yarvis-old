@@ -1,7 +1,7 @@
 import numpy as np
 import cv2 as cv
 
-capture = cv.VideoCapture(-1)
+capture = cv.VideoCapture(0)
 if not capture.isOpened():
     print("Cannot open camera")
     exit()
