@@ -1,13 +1,13 @@
 import asyncio
 import winsdk.windows.media.capture as wdmc
 import winsdk.windows.media.capture.frames as wdmcf
-import winsdk.windows.devices.enumeration
+import winsdk.windows.media.mediaproperties as wmmp
 
 async def getCameras():
     frameSourceGroups = await wdmcf.MediaFrameSourceGroup.find_all_async()
     return frameSourceGroups
 
-frameSourceGroups = asyncio.get_event_loop().run_until_complete(getCameras())
+frameSourceGroups = asyncio.run(getCameras())
  
 
 
@@ -19,7 +19,7 @@ for currentSourceGroup in frameSourceGroups:
 
 selectedGroup = currentSourceGroup
 colorSourceInfo = sourceInfo
-#print(selectedGroup)
+print(selectedGroup)
 
 mediaCapture = wdmc.MediaCapture()
 settings = wdmc.MediaCaptureInitializationSettings()
@@ -28,7 +28,21 @@ settings.sharing_mode = wdmc.MediaCaptureSharingMode.EXCLUSIVE_CONTROL
 settings.memory_preference = wdmc.MediaCaptureMemoryPreference.CPU
 settings.streaming_capture_mode = wdmc.StreamingCaptureMode.VIDEO
 
+async def initMediaCapture():
+    await mediaCapture.initialize_async(settings)
+
 try:
-    mediaCapture.initialize_async(settings)
+    asyncio.run(initMediaCapture())
 except:
     print("failed to initialize mediacapture")
+
+colorFrameSource = mediaCapture.frame_sources[colorSourceInfo.id]
+for format in colorFrameSource.supported_formats:
+    if format.video_format.width >= 0 and format.subtype == wmmp.MediaEncodingSubtypes.argb32:
+        break
+preferredFormat = format
+
+async def setFormat():
+    await colorFrameSource.set_format_async(preferredFormat)
+
+asyncio.run(setFormat())
