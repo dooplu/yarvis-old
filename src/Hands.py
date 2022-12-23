@@ -2,10 +2,15 @@ import cv2
 import mediapipe as mp
 import math
 import numpy
+import time
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
+
+font = cv2.FONT_HERSHEY_SIMPLEX
+
+previousTime = 0
 
 maxPinchDist = 50
 
@@ -112,6 +117,13 @@ with mp_hands.Hands(
         roiPadded = cv2.copyMakeBorder(roi, 0, image_height - roiHeight, 0, image_width - roiWidth, cv2.BORDER_CONSTANT)
         #roiPadded = cv2.resize(roi, (image_width, image_height))
         final = numpy.concatenate((image, roiPadded), axis=1)
+        
+        fps = 1/(time.time()-previousTime)
+        fps = int(fps)
+        fps = str(fps)
+        previousTime = time.time()
+        
+        cv2.putText(final, fps, (5,35), font, 1,(255,255,255),2,cv2.LINE_AA)
         cv2.imshow('Iron Man', final)
         if cv2.waitKey(5) & 0xFF == 27:
             break
