@@ -15,7 +15,7 @@ isPinchingBefore = False
 rectCoords = []
 
 # For webcam input:
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 with mp_hands.Hands(
         min_detection_confidence=0.5,
         min_tracking_confidence=0.5) as hands:
