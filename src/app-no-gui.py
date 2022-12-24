@@ -12,6 +12,9 @@ import mediapipe as mp
 from model import KeyPointClassifier
 from model import PointHistoryClassifier
 
+from lib import widgets
+
+circle1 = widgets.circle(0, 0, 50, (255, 255, 255))
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -56,7 +59,7 @@ def main():
     mp_hands = mp.solutions.hands
     hands = mp_hands.Hands(
         static_image_mode=use_static_image_mode,
-        max_num_hands=2,
+        max_num_hands=1,
         min_detection_confidence=min_detection_confidence,
         min_tracking_confidence=min_tracking_confidence,
     )
@@ -138,14 +141,24 @@ def main():
                 # Calculate the most gesture IDs among the most recent detections
                 finger_gesture_history.append(finger_gesture_id)
 
+                
+                
+                if hand_sign_id == 1:
+                    circle1.x = landmark_list[9][0]
+                    circle1.y = landmark_list[9][1]
+                
+
         else:
             point_history.append([0, 0])
+        
+        circle1.display(debug_image)
+        
         # Screen reflection #############################################################
         cv.imshow('Hand Gesture Recognition', debug_image)
         
         # print hand pose ##########################################################################################
         try:
-            print(keypoint_classifier_labels[hand_sign_id])
+            print(hand_sign_id)
             
         except:
             pass

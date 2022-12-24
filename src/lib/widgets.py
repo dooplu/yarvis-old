@@ -13,7 +13,7 @@ class circle(object):
         self.radius = radius
         self.colour = colour
 
-    def display(self, image, mouseX, mouseY):
+    def display(self, image):
         cv.circle(image, (self.x, self.y), self.radius, self.colour, -1, cv.LINE_AA)
         #return self.img
 
