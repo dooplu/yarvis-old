@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-import widgets
+from lib import widgets
 
 screenWidth, screenHeight = 720, 480
 
