@@ -18,8 +18,8 @@ def get_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--device", type=int, default=0)
-    parser.add_argument("--width", help='cap width', type=int, default=960)
-    parser.add_argument("--height", help='cap height', type=int, default=540)
+    parser.add_argument("--width", help='cap width', type=int, default=720)
+    parser.add_argument("--height", help='cap height', type=int, default=480)
 
     parser.add_argument('--use_static_image_mode', action='store_true')
     parser.add_argument("--min_detection_confidence",
@@ -87,7 +87,6 @@ def returnGestures(cap, hands, point_history, keypoint_classifier, point_history
             # Calculate the most gesture IDs among the most recent detections
             finger_gesture_history.append(finger_gesture_id)
             
-            print(hand_sign_id)
             landmarks = landmark_list
             hand_sign = hand_sign_id
     else:
