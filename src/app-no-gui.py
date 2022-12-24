@@ -139,6 +139,18 @@ def main():
 
                 # Calculate the most gesture IDs among the most recent detections
                 finger_gesture_history.append(finger_gesture_id)
+                
+                try:
+                    if handedness.classification[0].label[0:] == "Right":
+                        right_hand_sign_id = hand_sign_id
+                    
+                    elif handedness.classification[0].label[0:] == "Left":
+                        left_hand_sign_id = hand_sign_id
+                    
+                    print("Left: {}   Right: {}".format(left_hand_sign_id, right_hand_sign_id), end="\r")
+                
+                except:
+                    pass
 
         else:
             point_history.append([0, 0])
@@ -146,13 +158,7 @@ def main():
 
         circle.display(debug_image)
         cv.imshow('Hand Gesture Recognition', debug_image)
-        
-        # print hand pose ##########################################################################################
-        try:
-            print(hand_sign_id)
-            
-        except:
-            pass
+    
 
     cap.release()
     cv.destroyAllWindows()
