@@ -8,9 +8,3 @@ import gestureRecognition
 circle1 = widgets.circle(200, 200, 50, (255, 255, 255))
 
 gestureRecognition.main()
-
-
-
-    
-
-
