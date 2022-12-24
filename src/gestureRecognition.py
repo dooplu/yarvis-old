@@ -47,11 +47,11 @@ def returnGestures(cap, hands, point_history, keypoint_classifier, point_history
     # Key processing (ESC: end) #################################################
     key = cv.waitKey(10)
     if key == 27:  # ESC
-        return 0, np.zeros((1,1,3), np.uint8)
+        return 0, np.zeros((1,1,3), np.uint8), [], 0
     # camera capture #####################################################
     ret, image = cap.read()
     if not ret:
-        return 0, np.zeros((1,1,3), np.uint8)
+        return 0, np.zeros((1,1,3), np.uint8), [], 0
     image = cv.flip(image, 1)  # mirror display
     debug_image = copy.deepcopy(image)
     # Conduct detection #############################################################
@@ -60,6 +60,8 @@ def returnGestures(cap, hands, point_history, keypoint_classifier, point_history
     results = hands.process(image)
     image.flags.writeable = True
     #  ####################################################################
+    landmarks = []
+    hand_sign = 0
     if results.multi_hand_landmarks is not None:
         for hand_landmarks, handedness in zip(results.multi_hand_landmarks,
                                               results.multi_handedness):
@@ -85,24 +87,16 @@ def returnGestures(cap, hands, point_history, keypoint_classifier, point_history
             # Calculate the most gesture IDs among the most recent detections
             finger_gesture_history.append(finger_gesture_id)
             
-            try:
-                if handedness.classification[0].label[0:] == "Right":
-                    right_hand_sign_id = hand_sign_id
-                
-                elif handedness.classification[0].label[0:] == "Left":
-                    left_hand_sign_id = hand_sign_id
-                
-                print("Left: {}   Right: {}".format(left_hand_sign_id, right_hand_sign_id), end="\r")
-            
-            except:
-                pass
+            print(hand_sign_id)
+            landmarks = landmark_list
+            hand_sign = hand_sign_id
     else:
         point_history.append([0, 0])
     # Screen reflection #############################################################
-    return 1, debug_image
+    return 1, debug_image, landmarks, hand_sign
     
 
-def init(): 
+def init(max): 
     # Argument parsing #################################################################
     args = get_args()
     cap_device = args.device
@@ -119,7 +113,7 @@ def init():
     mp_hands = mp.solutions.hands
     hands = mp_hands.Hands(
         static_image_mode=use_static_image_mode,
-        max_num_hands=2,
+        max_num_hands=max,
         min_detection_confidence=min_detection_confidence,
         min_tracking_confidence=min_tracking_confidence,
     )

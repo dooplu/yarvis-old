@@ -7,14 +7,22 @@ import numpy as np
 
 #image = np.zeros((screenHeight, screenWidth, 3), np.uint8)
 
-circle1 = widgets.circle(200, 200, 50, (255, 255, 255))
 
 
-cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history = gestureRecognition.init()
+cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history = gestureRecognition.init(1)
 
 while True:
 
-    flag, image = gestureRecognition.returnGestures(cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history)
+    flag, image, landmarks, gesture = gestureRecognition.returnGestures(cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history)
+    circles = []
+
+    if gesture == 3:
+        circles.append(widgets.circle(landmarks[8][0], landmarks[8][1], 5, (0, 0, 255)))
+    
+    if len(circles) > 0:
+        for circle in circles:
+            circle.display(image)
+
     if flag == 0:
         break
 
