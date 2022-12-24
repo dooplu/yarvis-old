@@ -149,7 +149,7 @@ def main():
         
         # print hand pose ##########################################################################################
         try:
-            print(keypoint_classifier_labels[hand_sign_id])
+            print(hand_sign_id)
             
         except:
             pass
