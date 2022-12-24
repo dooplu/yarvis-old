@@ -35,19 +35,7 @@ def get_args():
 
     return args
 
-
-#while True:
-#    flag = returnGestures(init())
-#    if flag == 0:
-#        break
-#cap.release()
-#cv.destroyAllWindows()
-
 def returnGestures(cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history):
-    # Key processing (ESC: end) #################################################
-    key = cv.waitKey(10)
-    if key == 27:  # ESC
-        return 0, np.zeros((1,1,3), np.uint8), [], 0
     # camera capture #####################################################
     ret, image = cap.read()
     if not ret:
@@ -220,7 +208,3 @@ def logging_csv(number, mode, landmark_list, point_history_list):
             writer = csv.writer(f)
             writer.writerow([number, *point_history_list])
     return
-
-
-if __name__ == '__main__':
-    main()
