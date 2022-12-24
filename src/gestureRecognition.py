@@ -8,12 +8,10 @@ from collections import deque
 
 import cv2 as cv
 import mediapipe as mp
-import widgets
 
 from model import KeyPointClassifier
 from model import PointHistoryClassifier
 
-circle = widgets.circle(100, 100, 50, (255,255,255))
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -156,7 +154,6 @@ def main():
             point_history.append([0, 0])
         # Screen reflection #############################################################
 
-        circle.display(debug_image)
         cv.imshow('Hand Gesture Recognition', debug_image)
     
 
