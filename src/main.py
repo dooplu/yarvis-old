@@ -11,7 +11,7 @@ outputImage = np.zeros((screenHeight, screenWidth, 3), np.uint8)
 gestureHistory = deque(maxlen=10)
 smoothGestureThreshold = 0.5
 
-glob = widgets.circle(0, 0, 50, (255, 255, 255))
+glob = widgets.circle(0, 0, 25, (255, 255, 255))
 
 def fps(image, previousTime):
     font = cv.FONT_HERSHEY_SIMPLEX
@@ -20,30 +20,16 @@ def fps(image, previousTime):
     fps = str(fps)
     cv.putText(image, fps, (5,35), font, 1,(255,255,255),2,cv.LINE_AA)
 
-# organize all the drawing into its own function
-def draw(image, landmarks, gesture):
-    if len(landmarks) < 1:
-        return image
-    # clear the frame
+# creates a blank frame 
+def clearFrame():
     image = np.zeros((screenHeight, screenWidth, 3), np.uint8)
-
-    if gesture == 1:
-        glob.x = int(lerp(glob.x, landmarks[9][0], 0.15))
-        glob.y = int(lerp(glob.y, landmarks[9][1], 0.15))
-
-    glob.display(image)
     return image
-
-# linearly interpolate between two values
-def lerp(starting, ending, percentage):
-    return starting + (ending - starting) * percentage
 
 # to smooth out noise and avoid sudden changes due to false positives
 def smoothGesture(currentGesture, gestureHistory, smoothGestureThreshold):
     if len(gestureHistory) < 1:
         return 0
     smoothed = currentGesture
-    counter = 0
     gesturePresences = {}
     for gesture in gestureHistory:
         if gesture not in gesturePresences:
@@ -62,6 +48,15 @@ def smoothGesture(currentGesture, gestureHistory, smoothGestureThreshold):
 
     return smoothed
 
+# organize all the drawing into its own function
+def draw(image, landmarks, gesture):
+    # clear the frame at the beginning of every draw loop
+    image = clearFrame()
+
+    return image
+
+
+
 # initialize the hand tracking and gesture recognition
 cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history = gestureRecognition.init(1)
 
@@ -72,17 +67,22 @@ while True:
         break
     # set the previous time to the current time at the beginning of the loop
     previousTime = time.time()
-    # pass the init variables into gesture recognition
+    # pass the init variables into gesture recognition, this returns hand gesture, landmark coordinates and the latest camera frame
     flag, debugImage, landmarks, currentGesture = gestureRecognition.returnGestures(cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history)
     if flag == 0:
         break
 
+    # pass the currentGesture into this smoothedGesture function so that we can reduce false positives messing with manipulation
     smoothedGesture = smoothGesture(currentGesture, gestureHistory, smoothGestureThreshold)
     
+    # pass the frame through the draw loop and return it
     outputImage = draw(outputImage, landmarks, smoothedGesture)
     #smoothedImage = draw(smoothedImage, landmarks, smoothedGesture)
 
+    # add fps to the debug image, BROKEN
     fps(debugImage, previousTime)
+
+    # track the last x gestures (as set by gestureHistory maxlen) to be used by smoothedGesture as well as others
     gestureHistory.append(currentGesture)
 
     #cv.imshow('smoothed', smoothedImage)
