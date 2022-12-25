@@ -28,8 +28,8 @@ def draw(image, landmarks, gesture):
     image = np.zeros((screenHeight, screenWidth, 3), np.uint8)
 
     if gesture == 1:
-        glob.x = int(lerp(glob.x, landmarks[9][0], 0.20))
-        glob.y = int(lerp(glob.y, landmarks[9][1], 0.20))
+        glob.x = int(lerp(glob.x, landmarks[9][0], 0.15))
+        glob.y = int(lerp(glob.y, landmarks[9][1], 0.15))
 
     glob.display(image)
     return image
