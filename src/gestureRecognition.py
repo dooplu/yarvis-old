@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*- 
+# This is a modified version of https://github.com/Kazuhito00/hand-gesture-recognition-using-mediapipe/blob/main/README_EN.md
+# All comments made in japanese were translated to english using google translate
+
 import csv
 import copy
 import argparse
