@@ -11,7 +11,7 @@ outputImage = np.zeros((screenHeight, screenWidth, 3), np.uint8)
 gestureHistory = deque(maxlen=10)
 smoothGestureThreshold = 0.5
 
-glob = widgets.circle(0, 0, 25, (255, 255, 255))
+cursor = widgets.circle(0, 0, 15, (255, 146, 74), 3)
 
 def fps(image, previousTime):
     font = cv.FONT_HERSHEY_SIMPLEX
@@ -48,13 +48,31 @@ def smoothGesture(currentGesture, gestureHistory, smoothGestureThreshold):
 
     return smoothed
 
+
 # organize all the drawing into its own function
-def draw(image, landmarks, gesture):
+def draw(image, cursorX, cursorY, gesture):
     # clear the frame at the beginning of every draw loop
     image = clearFrame()
 
+    
+    drawCursor(image, cursorX, cursorY)
     return image
 
+def drawCursor(image, cursorX, cursorY):
+    cursor.moveToTarget(cursorX, cursorY)
+    #cursor.x = widgets.baseWidget.lerp(cursor.x, cursorX, widgets.baseWidget.movementSmoothing)
+    #cursor.y = widgets.baseWidget.lerp(cursor.y, cursorY, widgets.baseWidget.movementSmoothing)
+    cursor.display(image)
+
+# we might want to change what defines our cursor in the future so its convenient to put this into its own function
+def returnCursor(landmarks):
+    if len(landmarks) < 1:
+        return int(screenWidth/2), int(screenHeight/2)
+    cursorX = (landmarks[8][0] + landmarks[4][0]) / 2
+    cursorY = (landmarks[8][1] + landmarks[4][1]) / 2
+    cursorX = int(cursorX)
+    cursorY = int(cursorY)
+    return cursorX, cursorY
 
 
 # initialize the hand tracking and gesture recognition
@@ -72,11 +90,14 @@ while True:
     if flag == 0:
         break
 
+    # 
+    cursorX, cursorY = returnCursor(landmarks)
+
     # pass the currentGesture into this smoothedGesture function so that we can reduce false positives messing with manipulation
     smoothedGesture = smoothGesture(currentGesture, gestureHistory, smoothGestureThreshold)
     
     # pass the frame through the draw loop and return it
-    outputImage = draw(outputImage, landmarks, smoothedGesture)
+    outputImage = draw(outputImage, cursorX, cursorY, smoothedGesture)
     #smoothedImage = draw(smoothedImage, landmarks, smoothedGesture)
 
     # add fps to the debug image, BROKEN
