@@ -13,5 +13,5 @@ See our trello: https://trello.com/b/HLfzcOHO/yarvis
 - we are trying to access the windows hello IR camera for pseudo-depth perception (SCRAPPED)
 - 
 
-Credit:
+# Credit:
 Gesture recognition is done with the help of https://github.com/Kazuhito00/hand-gesture-recognition-using-mediapipe/blob/main/README_EN.md
