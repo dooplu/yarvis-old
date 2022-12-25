@@ -34,29 +34,31 @@ class circle(baseWidget):
         self.highlightColour = (colour[0] + self.highlightBrightness, colour[1] + self.highlightBrightness, colour[2] + self.highlightBrightness)
 
     def display(self, image, cursorX, cursorY, gesture, gestureHistory):
-        self.grab(cursorX, cursorY, gesture, gestureHistory)
+        self.grab(cursorX, cursorY, gesture)
         cv.circle(image, (self.x, self.y), self.radius, self.colour, self.thickness, cv.LINE_AA)
         
     
-    def grab(self, cursorX, cursorY, currentGesture, gestureHistory):
-        # we cant do anything if we have no data yet      
-        if len(gestureHistory) < 1:
-            return
+    def grab(self, cursorX, cursorY, currentGesture):
         
         if self.grabbingBefore:
             if currentGesture == 1:
                 self.moveToTarget(cursorX,cursorY)
+                self.colour = self.highlightColour
                 self.grabbingBefore = True
             else:
+                self.colour = self.originalColour
                 self.grabbingBefore = False
         else:
             if math.dist((cursorX, cursorY), (self.x,self.y)) > self.radius:
+                self.colour = self.originalColour
                 self.grabbingBefore = False
                 return
             if currentGesture == 1:
+                self.colour = self.highlightColour
                 self.moveToTarget(cursorX,cursorY)
                 self.grabbingBefore = True
             else:
+                self.colour = self.originalColour
                 self.grabbingBefore = False
             
 
