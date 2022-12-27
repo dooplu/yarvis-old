@@ -4,12 +4,16 @@ import cv2 as cv
 import numpy as np
 import time
 from collections import deque
+from utils import CvFpsCalc
 
 screenWidth, screenHeight = 720, 480
 outputImage = np.zeros((screenHeight, screenWidth, 3), np.uint8)
 #smoothedImage = np.zeros((screenHeight, screenWidth, 3), np.uint8)
 gestureHistory = deque(maxlen=10)
 smoothGestureThreshold = 0.5
+
+########################################################################################################
+cvFpsCalc = CvFpsCalc(buffer_len=10)
 
 cursor = widgets.cursor(0, 0, 15, (255, 146, 74), 3)
 test = widgets.circle(300, 300, 50, (40, 250, 95), -1)
@@ -95,6 +99,9 @@ while True:
 
     # 
     cursorX, cursorY = returnCursor(landmarks)
+    
+    ####################################################################################################
+    fps = cvFpsCalc.get()
 
     # pass the currentGesture into this smoothedGesture function so that we can reduce false positives messing with manipulation
     smoothedGesture = smoothGesture(currentGesture, gestureHistory, smoothGestureThreshold)
@@ -104,6 +111,11 @@ while True:
     #smoothedImage = draw(smoothedImage, landmarks, smoothedGesture)
 
     # add fps to the debug image, BROKEN
+    cv.putText(debugImage, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
+            1.0, (0, 0, 0), 4, cv.LINE_AA)
+    cv.putText(debugImage, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
+            1.0, (255, 255, 255), 2, cv.LINE_AA)
+    
     #fps(debugImage, previousTime)
 
     # track the last x gestures (as set by gestureHistory maxlen) to be used by smoothedGesture as well as others
@@ -114,4 +126,4 @@ while True:
     cv.imshow('output', outputImage)
 
 cap.release()
-cv.destroyAllWindows()
+cv.destroyAllWindows()    
