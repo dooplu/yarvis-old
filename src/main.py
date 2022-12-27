@@ -81,6 +81,13 @@ def returnCursor(landmarks):
     cursorY = int(cursorY)
     return cursorX, cursorY
 
+def drawfps(image, fps):
+    cv.putText(debugImage, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
+            1.0, (0, 0, 0), 4, cv.LINE_AA)
+    cv.putText(debugImage, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
+            1.0, (255, 255, 255), 2, cv.LINE_AA)
+    return debugImage
+
 
 # initialize the hand tracking and gesture recognition
 cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history = gestureRecognition.init(1)
@@ -109,14 +116,9 @@ while True:
     # pass the frame through the draw loop and return it
     outputImage = draw(outputImage, cursorX, cursorY, smoothedGesture, gestureHistory)
     #smoothedImage = draw(smoothedImage, landmarks, smoothedGesture)
-
-    # add fps to the debug image, BROKEN
-    cv.putText(debugImage, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
-            1.0, (0, 0, 0), 4, cv.LINE_AA)
-    cv.putText(debugImage, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
-            1.0, (255, 255, 255), 2, cv.LINE_AA)
     
-    #fps(debugImage, previousTime)
+    #fps function
+    drawfps(debugImage, fps)
 
     # track the last x gestures (as set by gestureHistory maxlen) to be used by smoothedGesture as well as others
     gestureHistory.append(currentGesture)
