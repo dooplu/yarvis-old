@@ -1,6 +1,8 @@
 # yarvis
  Recreating iron man tech IRL, in collaboration with [Yusuf Al-Khawaldeh](https://github.com/uoRetr0)
 
+Using python 3.9.13
+
 ![ezgif-3-1eef8dce28](https://user-images.githubusercontent.com/43157907/197848053-06020766-00b7-42c1-8219-ed1515373526.gif)
 
 (from an earlier prototype)
