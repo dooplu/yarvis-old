@@ -1,0 +1,17 @@
+{
+  "intents": [
+    {
+      "tag": "greetings",
+      "patterns": ["hi", "hey", "what's up"],
+      "responses": ["hello sir"],
+      "context_set": ""
+    },
+
+    {
+      "tag": "note",
+      "patterns": ["create a new note", "create a note", "make a note", "write a note"],
+      "responses": [],
+      "context_set": ""
+    }
+ ]
+}
