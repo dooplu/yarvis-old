@@ -12,22 +12,15 @@ outputImage = np.zeros((screenHeight, screenWidth, 3), np.uint8)
 gestureHistory = deque(maxlen=10)
 smoothGestureThreshold = 0.5
 
-########################################################################################################
 cvFpsCalc = CvFpsCalc(buffer_len=10)
 
 cursor = widgets.cursor(0, 0, 15, (255, 146, 74), 3)
 test = widgets.circle(300, 300, 50, (40, 250, 95), -1)
 test1 = widgets.circle(100, 100, 50, (0, 0, 230), -1)
-
-def fps(image, previousTime):
-    font = cv.FONT_HERSHEY_SIMPLEX
-    fps = 1/(time.time()-previousTime)
-    fps = int(fps)
-    fps = str(fps)
-    cv.putText(image, fps, (5,35), font, 1,(255,255,255),2,cv.LINE_AA)
+test2 = widgets.square(600, 300, 100, 150, (255, 255, 255), -1)
 
 # creates a blank frame 
-def clearFrame():
+def clearFrame(image):
     image = np.zeros((screenHeight, screenWidth, 3), np.uint8)
     return image
 
@@ -58,10 +51,11 @@ def smoothGesture(currentGesture, gestureHistory, smoothGestureThreshold):
 # organize all the drawing into its own function
 def draw(image, cursorX, cursorY, gesture, gestureHistory):
     # clear the frame at the beginning of every draw loop
-    image = clearFrame()
+    image = clearFrame(image)
 
     test.display(image, cursorX, cursorY, gesture, gestureHistory)
     test1.display(image, cursorX, cursorY, gesture, gestureHistory)
+    test2.display(image)
     drawCursor(image, cursorX, cursorY)
     return image
 
@@ -81,12 +75,11 @@ def returnCursor(landmarks):
     cursorY = int(cursorY)
     return cursorX, cursorY
 
-def drawfps(image, fps):
-    cv.putText(debugImage, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
+def drawFps(image, fps):
+    cv.putText(image, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
             1.0, (0, 0, 0), 4, cv.LINE_AA)
-    cv.putText(debugImage, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
+    cv.putText(image, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
             1.0, (255, 255, 255), 2, cv.LINE_AA)
-    return debugImage
 
 
 # initialize the hand tracking and gesture recognition
@@ -118,7 +111,7 @@ while True:
     #smoothedImage = draw(smoothedImage, landmarks, smoothedGesture)
     
     #fps function
-    drawfps(debugImage, fps)
+    drawFps(debugImage, fps)
 
     # track the last x gestures (as set by gestureHistory maxlen) to be used by smoothedGesture as well as others
     gestureHistory.append(currentGesture)

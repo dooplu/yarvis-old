@@ -7,9 +7,11 @@ class baseWidget:
 
     movementSmoothing = 0.15
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, colour, thickness):
         self.x = x
         self.y = y
+        self.colour = colour
+        self.thickness = thickness
     
     # linearly interpolate between two values
     def lerp(self, starting, ending, percentage):
@@ -24,14 +26,12 @@ class baseWidget:
 
 class circle(baseWidget):
     def __init__(self, x, y, radius, colour, thickness):
-        super().__init__(x, y)
+        super().__init__(x, y, colour, thickness)
         self.radius = radius
-        self.colour = colour
-        self.originalColour = colour
-        self.thickness = thickness
+        self.originalColour = self.colour
         self.highlightBrightness = -40
         self.grabbingBefore = False
-        self.highlightColour = (colour[0] + self.highlightBrightness, colour[1] + self.highlightBrightness, colour[2] + self.highlightBrightness)
+        self.highlightColour = (self.colour[0] + self.highlightBrightness, self.colour[1] + self.highlightBrightness, self.colour[2] + self.highlightBrightness)
 
     def display(self, image, cursorX, cursorY, gesture, gestureHistory):
         self.grab(cursorX, cursorY, gesture)
@@ -61,16 +61,24 @@ class circle(baseWidget):
                 self.colour = self.originalColour
                 self.grabbingBefore = False
             
+class square(baseWidget):
+    def __init__(self, x, y, width, height, colour, thickness):
+        super().__init__(x, y, colour, thickness)
+        self.width = width
+        self.height = height
 
+    def display(self, image):
+        # to make things simpler, I want the coordinates to specify the center of the rectangle, so we do a little math
+        pt1 = (int(self.x - self.width / 2), int(self.y - self.height / 2))
+        pt2 = (int(self.x + self.width / 2), int(self.y + self.height / 2))
+        cv.rectangle(image, pt1, pt2, self.colour, self.thickness, cv.LINE_AA)
         
         
 class cursor(baseWidget):
     def __init__(self, x, y, radius, colour, thickness):
-        super().__init__(x, y)
+        super().__init__(x, y, colour, thickness)
         self.radius = radius
-        self.colour = colour
-        self.thickness = thickness
-        
+   
     def display(self, image):
         cv.circle(image, (self.x, self.y), self.radius, self.colour, self.thickness, cv.LINE_AA)
         
