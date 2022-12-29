@@ -84,7 +84,7 @@ def returnGestures(cap, hands, point_history, keypoint_classifier, point_history
         point_history.append([0, 0])
     # Screen reflection #############################################################
     return 1, debug_image, landmarks, hand_sign
-    
+
 
 def init(max): 
     # Argument parsing #################################################################
