@@ -72,7 +72,47 @@ class square(baseWidget):
         pt1 = (int(self.x - self.width / 2), int(self.y - self.height / 2))
         pt2 = (int(self.x + self.width / 2), int(self.y + self.height / 2))
         cv.rectangle(image, pt1, pt2, self.colour, self.thickness, cv.LINE_AA)
+    
+
+class postIt(square):
+    font = 0
+    fontSize = 0.5
+    fontThickness = 1
+    margin = 5
+
+    def __init__(self, text, x, y, colour):
+        super().__init__(x, y, 0, 0, colour, -1)
+        self.text = text
+    
+    def display(self, image):
+        lines = self.text.splitlines() # put text does not support new lines, so we split into individual lines
+        lineSizes = [] 
+        lineHeight = 0
+        for i in range(len(lines)): # find the pixel width of each line 
+            size, baseline = cv.getTextSize(lines[i], self.font, self.fontSize, self.thickness)
+            lineSizes.append(size[0])
+            lineHeight = size[1] + baseline
+
+        longest = max(lineSizes) # find the widest amongst them as it will determine the postit size, PIXELS
+       #widestIndex = lineSizes.index(longest)
+        #widestLine = lines[widestIndex] # the widest line determines the width of the postIt, STRING
         
+        # the corners of the rectangle 
+        topLeft = (self.x - (longest // 2 + postIt.margin), self.y - (len(lines)*lineHeight//2 + postIt.margin))
+        bottomRight = (self.x + (longest // 2 + postIt.margin), self.y + len(lines)*lineHeight//2 + postIt.margin)
+
+        cv.rectangle(image, topLeft, bottomRight, self.colour, self.thickness, cv.LINE_AA)
+        for i in range(len(lines)):
+            line = lines[i]
+            point = (self.x - lineSizes[i] // 2, topLeft[1] + postIt.margin + lineHeight * (i+1))
+
+            cv.putText(image, line, point, self.font, self.fontSize, (255,255,255), 1, 16)
+
+
+
+        
+
+
         
 class cursor(baseWidget):
     def __init__(self, x, y, radius, colour, thickness):

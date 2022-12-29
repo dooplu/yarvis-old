@@ -18,6 +18,7 @@ cursor = widgets.cursor(0, 0, 15, (255, 146, 74), 3)
 test = widgets.circle(300, 300, 50, (40, 250, 95), -1)
 test1 = widgets.circle(100, 100, 50, (0, 0, 230), -1)
 test2 = widgets.square(600, 300, 100, 150, (255, 255, 255), -1)
+note = widgets.postIt("to be or not to be\nthat is the question\n whether tis nobler in the mind to suffer\n to die to sleep", 300, 300, (255, 0, 0))
 
 # creates a blank frame 
 def clearFrame(image):
@@ -53,9 +54,10 @@ def draw(image, cursorX, cursorY, gesture, gestureHistory):
     # clear the frame at the beginning of every draw loop
     image = clearFrame(image)
 
-    test.display(image, cursorX, cursorY, gesture, gestureHistory)
-    test1.display(image, cursorX, cursorY, gesture, gestureHistory)
-    test2.display(image)
+    #test.display(image, cursorX, cursorY, gesture, gestureHistory)
+    #test1.display(image, cursorX, cursorY, gesture, gestureHistory)
+    #test2.display(image)
+    note.display(image)
     drawCursor(image, cursorX, cursorY)
     return image
 
