@@ -18,7 +18,7 @@ cursor = widgets.cursor(0, 0, 15, (255, 146, 74), 3)
 test = widgets.circle(300, 300, 50, (40, 250, 95), -1)
 test1 = widgets.circle(100, 100, 50, (0, 0, 230), -1)
 test2 = widgets.square(600, 300, 100, 150, (255, 255, 255), -1)
-note = widgets.postIt("to be or not to be\nthat is the question\n whether tis nobler in the mind to suffer\n to die to sleep", 300, 300, (255, 0, 0))
+note = widgets.postIt("gimgim\ngongala\nthe third", 300, 300, (255, 0, 0))
 
 # creates a blank frame 
 def clearFrame(image):
@@ -55,7 +55,7 @@ def draw(image, cursorX, cursorY, gesture, gestureHistory):
     image = clearFrame(image)
 
     #test.display(image, cursorX, cursorY, gesture, gestureHistory)
-    #test1.display(image, cursorX, cursorY, gesture, gestureHistory)
+    test1.display(image, cursorX, cursorY, gesture, gestureHistory)
     #test2.display(image)
     note.display(image, cursorX, cursorY, gesture)
     drawCursor(image, cursorX, cursorY)
@@ -75,7 +75,7 @@ def returnCursor(landmarks):
     cursorY = (landmarks[8][1] + landmarks[4][1]) / 2
     cursorX = int(cursorX)
     cursorY = int(cursorY)
-    return cursorX, cursorY
+    return cursorX, cursorY # the point halfway between the thumb and index
 
 def drawFps(image, fps):
     cv.putText(image, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
