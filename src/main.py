@@ -8,9 +8,8 @@ from utils import CvFpsCalc
 
 screenWidth, screenHeight = 720, 480
 outputImage = np.zeros((screenHeight, screenWidth, 3), np.uint8)
-#smoothedImage = np.zeros((screenHeight, screenWidth, 3), np.uint8)
-gestureHistory = deque(maxlen=10)
-smoothGestureThreshold = 0.5
+gestureHistory = deque(maxlen=10) # deques are great because it erases the oldest element and shifts everythign over to the left
+smoothGestureThreshold = 0.5 # play with this, affects gesture smoothing
 
 cvFpsCalc = CvFpsCalc(buffer_len=10)
 
@@ -18,7 +17,7 @@ cursor = widgets.cursor(0, 0, 15, (255, 146, 74), 3)
 test = widgets.circle(300, 300, 50, (40, 250, 95), -1)
 test1 = widgets.circle(100, 100, 50, (0, 0, 230), -1)
 test2 = widgets.square(600, 300, 100, 150, (255, 255, 255), -1)
-note = widgets.postIt("gimgim\ngongala\nthe third", 300, 300, (255, 0, 0))
+note = widgets.postIt("test\ntest\ntest", 300, 300, (255, 0, 0))
 
 # creates a blank frame 
 def clearFrame(image):
@@ -101,7 +100,6 @@ while True:
 
     # 
     cursorX, cursorY = returnCursor(landmarks)
-    
     ####################################################################################################
     fps = cvFpsCalc.get()
 
