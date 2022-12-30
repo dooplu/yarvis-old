@@ -57,7 +57,7 @@ def draw(image, cursorX, cursorY, gesture, gestureHistory):
     #test.display(image, cursorX, cursorY, gesture, gestureHistory)
     #test1.display(image, cursorX, cursorY, gesture, gestureHistory)
     #test2.display(image)
-    note.display(image)
+    note.display(image, cursorX, cursorY, gesture)
     drawCursor(image, cursorX, cursorY)
     return image
 

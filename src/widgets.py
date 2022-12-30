@@ -12,6 +12,8 @@ class baseWidget:
         self.y = y
         self.colour = colour
         self.thickness = thickness
+        self.grabbingBefore = False
+
     
     # linearly interpolate between two values
     def lerp(self, starting, ending, percentage):
@@ -30,7 +32,6 @@ class circle(baseWidget):
         self.radius = radius
         self.originalColour = self.colour
         self.highlightBrightness = -40
-        self.grabbingBefore = False
         self.highlightColour = (self.colour[0] + self.highlightBrightness, self.colour[1] + self.highlightBrightness, self.colour[2] + self.highlightBrightness)
 
     def display(self, image, cursorX, cursorY, gesture, gestureHistory):
@@ -83,8 +84,12 @@ class postIt(square):
     def __init__(self, text, x, y, colour):
         super().__init__(x, y, 0, 0, colour, -1)
         self.text = text
+        self.originalColour = colour
+        self.highlightBrightness = -40
+        self.highlightColour = (colour[0] + self.highlightBrightness, colour[1] + self.highlightBrightness, colour[2] + self.highlightBrightness)
+
     
-    def display(self, image):
+    def display(self, image, cursorX, cursorY, gesture):
         lines = self.text.splitlines() # put text does not support new lines, so we split into individual lines
         lineSizes = [] 
         lineHeight = 0
@@ -94,20 +99,42 @@ class postIt(square):
             lineHeight = size[1] + baseline
 
         longest = max(lineSizes) # find the widest amongst them as it will determine the postit size, PIXELS
-       #widestIndex = lineSizes.index(longest)
-        #widestLine = lines[widestIndex] # the widest line determines the width of the postIt, STRING
-        
+        self.width = longest
+        self.height = lineHeight
+        self.grab(cursorX, cursorY, gesture)
         # the corners of the rectangle 
         topLeft = (self.x - (longest // 2 + postIt.margin), self.y - (len(lines)*lineHeight//2 + postIt.margin))
         bottomRight = (self.x + (longest // 2 + postIt.margin), self.y + len(lines)*lineHeight//2 + postIt.margin)
 
-        cv.rectangle(image, topLeft, bottomRight, self.colour, self.thickness, cv.LINE_AA)
+        # drawing the postit
+        cv.rectangle(image, topLeft, bottomRight, self.colour, self.thickness, cv.LINE_AA) # background
         for i in range(len(lines)):
             line = lines[i]
             point = (self.x - lineSizes[i] // 2, topLeft[1] + postIt.margin + lineHeight * (i+1))
-
             cv.putText(image, line, point, self.font, self.fontSize, (255,255,255), 1, 16)
-
+        
+    def grab(self, cursorX, cursorY, currentGesture):
+        
+        if self.grabbingBefore:
+            if currentGesture == 1:
+                self.moveToTarget(cursorX,cursorY)
+                self.colour = self.highlightColour
+                self.grabbingBefore = True
+            else:
+                self.colour = self.originalColour
+                self.grabbingBefore = False
+        else:
+            if (cursorX < (self.x - self.width / 2) or cursorX > (self.x + self.width / 2)) and (cursorY < (self.y - self.height / 2) or cursorX > (self.y + self.height / 2)):
+                self.colour = self.originalColour
+                self.grabbingBefore = False
+                return
+            if currentGesture == 1:
+                self.colour = self.highlightColour
+                self.moveToTarget(cursorX,cursorY)
+                self.grabbingBefore = True
+            else:
+                self.colour = self.originalColour
+                self.grabbingBefore = False
 
 
         
