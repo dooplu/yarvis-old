@@ -27,16 +27,11 @@ class baseWidget:
         self.y = self.lerp(self.y, y, baseWidget.movementSmoothing)
     
     def grab(self, cursorX, cursorY, currentGesture):
-        if self.radius != 0: # check if its a circluar widget
-            self.circleGrab(cursorX, cursorY, currentGesture)
-        else: # otherwise its a rectangular widget
-            self.squareGrab(cursorX, cursorY, currentGesture)
-        
-    def circleGrab(self, cursorX, cursorY, currentGesture):
-        self.hovering = self.isHoveringCircle(cursorX, cursorY)
-        
-    def squareGrab(self, cursorX, cursorY, currentGesture):
-        self.hovering = self.isHoveringSquare(cursorX, cursorY)
+        # figure out if the cursor is hovering ontop of the widget using the appropriate function
+        if self.radius != 0: # if it has a radius not equal to zero
+            self.hovering = self.isHoveringCircle(cursorX, cursorY)
+        else: # otherwise its a rectangle
+            self.hovering = self.isHoveringSquare(cursorX, cursorY)
 
         if self.hovering and self.grabbingBefore == False:
             if currentGesture == 1:
@@ -57,7 +52,7 @@ class baseWidget:
         else:
             self.colour = self.originalColour
             return False
-    
+
     def isHoveringSquare(self, cursorX, cursorY):
         if cursorX > (self.x - self.width / 2) and cursorX < (self.x + self.width /2) and cursorY > (self.y - self.height / 2) and cursorY < (self.y + self.height /2):
             self.colour = self.highlightColour
