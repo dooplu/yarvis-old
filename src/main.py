@@ -102,7 +102,7 @@ def createNote():
                 string += "\n"
                 continue
             elif word == "line" and text[i-1] == "new":
-                continue
+                continue 
             string += word + " "
         
         colour = list(map(int, colour))
