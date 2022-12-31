@@ -6,6 +6,12 @@ import time
 from collections import deque
 from utils import CvFpsCalc
 
+import os
+import multiprocessing
+import threading
+from assistantFolder import assistant
+
+
 screenWidth, screenHeight = 720, 480
 outputImage = np.zeros((screenHeight, screenWidth, 3), np.uint8)
 gestureHistory = deque(maxlen=10) # deques are great because it erases the oldest element and shifts everythign over to the left
@@ -86,6 +92,17 @@ def drawFps(image, fps):
 # initialize the hand tracking and gesture recognition
 cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history = gestureRecognition.init(1)
 
+
+def runBG():
+    
+    os.chdir('./assistantFolder')
+    print(os.getcwd())
+    exec(open("assistant.py").read())
+
+p = multiprocessing.Process(target=runBG)
+p.start()
+
+
 # main loop
 while True:
     key = cv.waitKey(10)
@@ -121,4 +138,4 @@ while True:
     cv.imshow('output', outputImage)
 
 cap.release()
-cv.destroyAllWindows()    
+cv.destroyAllWindows()

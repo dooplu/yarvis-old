@@ -1,13 +1,22 @@
 import speech_recognition as sr
 import pyttsx3 as tts
 import threading
-import sys
+import os
 
 from neuralintents import GenericAssistant
 
-recognizer = sr.Recognizer()
-speaker = tts.init()
-speaker.setProperty("rate", 150)
+def init():
+  
+  global recognizer
+  global speaker
+  
+  recognizer = sr.Recognizer()
+  speaker = tts.init()
+  speaker.setProperty("rate", 150)
+  
+
+
+  
 
 def createNote():
   # assistent asks what to write in note
@@ -73,14 +82,13 @@ def runAssistant():
           if text == "stop":
             speaker.say("bye")
             speaker.runAndWait()
-            speaker.stop()
-            sys.exit()
+            break
           
           # assistent will go through json file looking for the tag based on user's request
           # assistent will print or execute response
           else:
             if text is not None:
-              response = assistant.request(text)
+              response = assistantmodel.request(text)
               if response is not None:
                 speaker.say(response)
                 speaker.runAndWait()
@@ -91,14 +99,22 @@ def runAssistant():
 
 
 # dict to attribute every tag from json file to its method in class
+##mapping = {"note": createNote}
+
+##assistant = GenericAssistant("commands.json", intent_methods=mapping)
+
+
+# dict to attribute every tag from json file to its method in class
 mapping = {"note": createNote}
 
-assistant = GenericAssistant("commands.json", intent_methods=mapping)
+assistantmodel = GenericAssistant("commands.json", intent_methods=mapping)
 
 ##################################################################################################
 #assistant.train_model()
 #assistant.save_model()
-assistant.load_model()
+assistantmodel.load_model()
+
+init()
 
 # starts a thread
 threading.Thread(target=runAssistant()).start()
