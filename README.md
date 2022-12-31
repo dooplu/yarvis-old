@@ -46,7 +46,6 @@ pip install -r requirements.txt
 - Refactor alot of the code, this is the biggest project we've tackled so far and we learned so much, there's alot I (Adam) would like to move around and redo
 - Ideally, make a version 2. Python is good for all the machine learning and gesture recognition stuff, but it's limited in the graphics aspect, a version 2 would entail sending all the hand information to something like unity, where time would not be wasted on making a lot of common functionality from scratch (like a lerp function)
 
-See our [Trello](https://trello.com/b/HLfzcOHO/yarvis) to see some of our thought process.
-
+See our [Trello](https://trello.com/b/HLfzcOHO/yarvis) for more.
 # Credit:
 Getting the hand gestures is done with the help of Kazuhito00's [gesture recognition with mediapipe](https://github.com/Kazuhito00/hand-gesture-recognition-using-mediapipe)
