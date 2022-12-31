@@ -129,8 +129,8 @@ class postIt(square):
         self.height = lineHeight*len(lines) # this too
         self.grab(cursorX, cursorY, gesture) # now that we know the width and height, we can test for grabbing
         # the corners of the postit background rectangle
-        topLeft = (self.x - (longest // 2 + postIt.margin), self.y - (len(lines)*lineHeight//2 + postIt.margin))
-        bottomRight = (self.x + (longest // 2 + postIt.margin), self.y + len(lines)*lineHeight//2 + postIt.margin)
+        topLeft = (self.x - (longest // 2 + postIt.margin), self.y - (self.height//2 + postIt.margin))
+        bottomRight = (self.x + (longest // 2 + postIt.margin), self.y + self.height//2 + postIt.margin*2)
 
         # drawing the postit
         cv.rectangle(image, topLeft, bottomRight, self.colour, self.thickness, cv.LINE_AA) # background
@@ -148,9 +148,3 @@ class cursor(baseWidget):
    
     def display(self, image): # dont want the cursor to inherit all the grabbing stuff so it should have its own display function
         cv.circle(image, (self.x, self.y), self.radius, self.colour, self.thickness, cv.LINE_AA)
-        
-
-    
-
-
-
