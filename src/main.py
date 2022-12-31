@@ -10,6 +10,7 @@ import os
 screenWidth, screenHeight = 720, 480
 outputImage = np.zeros((screenHeight, screenWidth, 3), np.uint8)
 gestureHistory = deque(maxlen=10) # deques are great because it erases the oldest element and shifts everythign over to the left
+drawQueue = []
 smoothGestureThreshold = 0.5 # play with this, affects gesture smoothing
 
 cvFpsCalc = CvFpsCalc(buffer_len=10)
@@ -53,11 +54,13 @@ def smoothGesture(currentGesture, gestureHistory, smoothGestureThreshold):
 def draw(image, cursorX, cursorY, gesture, gestureHistory):
     # clear the frame at the beginning of every draw loop
     image = clearFrame(image)
+    if os.path.exists(".\save\sticky.txt"):
+        drawQueue.append(createNote()) # create a new note if one has been created by the voice assistant
 
-    #test.display(image, cursorX, cursorY, gesture, gestureHistory)
-    test1.display(image, cursorX, cursorY, gesture)
-    #test2.display(image)
-    note.display(image, cursorX, cursorY, gesture)
+    if len(drawQueue) > 0:
+        for widget in drawQueue:
+            widget.display(image, cursorX, cursorY, gesture)
+
     drawCursor(image, cursorX, cursorY)
     return image
 
@@ -82,6 +85,31 @@ def drawFps(image, fps):
             1.0, (0, 0, 0), 4, cv.LINE_AA)
     cv.putText(image, "FPS:" + str(fps), (10, 30), cv.FONT_HERSHEY_SIMPLEX,
             1.0, (255, 255, 255), 2, cv.LINE_AA)
+
+def createNote():
+    note = None
+    with open(".\save\sticky.txt") as file:
+        parameters = file.read().splitlines()
+        text = parameters[0] 
+        colour = parameters[1].split(",")
+
+        text = text.split(" ")
+        string = ""
+        for i in range(len(text)):
+            word = text[i]
+            
+            if word == "new" and text[i+1] == "line":
+                string += "\n"
+                continue
+            elif word == "line" and text[i-1] == "new":
+                continue
+            string += word + " "
+        
+        colour = list(map(int, colour))
+
+        note = widgets.postIt(string, screenWidth//2, screenHeight//2, colour)
+    os.remove(".\save\sticky.txt")
+    return note
 
 
 # initialize the hand tracking and gesture recognition
