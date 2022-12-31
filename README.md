@@ -8,7 +8,7 @@ Yarvis is a python project in which we attempt to approximate the hologram tech 
 
 This project stems from my lack of a whiteboard, and the fragile and temporary nature of sticky notes. Also it's cheaper than a hololens :).
 The main idea is that since we cannot stop and manipulate light midair as seen on film, the closest thing we can do (with what's available to us) is using gesture recognition and a projector.
-Of course there are simpler ways to do this, such as microsoft's hololens or VR, but that is a little out of our price range. But more importantly, it defeats the purpose. We don't want it to get in the way of whatever else we're doing. The reason I came up with this in the first place was so I could plan projects and set up little reminders for myself as I'm working with my hands or programming.
+Of course there are simpler ways to do this, such as microsoft's hololens or VR, but that is a little out of our price range. But more importantly, it defeats the purpose. We don't want it to get in the way of whatever else we're doing. The reason I came up with this in the first place was so I could plan projects and set up little reminders for myself as I'm working with my hands or programming. It should be completely unobtrusive.
 
 To achieve all this we use [OpenCV](https://opencv.org/) and Google's [MediaPipe](https://google.github.io/mediapipe/), along with some gesture recognition software by [Kazuhito00](https://github.com/Kazuhito00), to do the gesture recognition. And then using OpenCV's built in GUI capabilites to do all the drawing.
 
