@@ -1,7 +1,8 @@
 # yarvis
 
 Yarvis is a python project in which we attempt to approximate the hologram tech from the [iron man movies](https://youtu.be/WNu6fRo_7fg)
-(CURRENTLY A WORK IN PROGRESS)
+
+(work in progress)
 
 # Description
 
