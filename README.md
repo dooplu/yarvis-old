@@ -43,7 +43,7 @@ pip install -r requirements.txt
 - Get Yusuf's audio assistant to interact with note taking. This was really one of the first things that even inspired me to do this project, I had so many stickynotes around my office at one point and they'd fall off, be hard to modify, so I asked myself, what if I had digital sticky notes? and you see where we are now. The problem is, this is very close to being done, but because as you'll see in later points, alot of work at to be done before this could even be attempted.
 - Drawing in air. This is the other main reason I started this project. I do not own a white board, I would like one. But what if I could make a cooler one for free? (free up until I buy a projector...). This project is essentially a workflow tool, for jotting down ideas quickly along with some goodies. 
 - Fix the requirements.txt file, currently it has all the dependencies of the main like 5 packages we initially used.
-- Refactor alot of the code, this is the biggest projector we've tackled so far and we learned so much, there's alot I (Adam) would like to move around and redo
+- Refactor alot of the code, this is the biggest project we've tackled so far and we learned so much, there's alot I (Adam) would like to move around and redo
 - Ideally, make a version 2. Python is good for all the machine learning and gesture recognition stuff, but it's limited in the graphics aspect, a version 2 would entail sending all the hand information to something like unity, where time would not be wasted on making a lot of common functionality from scratch (like a lerp function)
 
 See our [Trello](https://trello.com/b/HLfzcOHO/yarvis) to see some of our thought process.
