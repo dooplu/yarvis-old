@@ -36,7 +36,7 @@ pip install -r requirements.txt
 
 # Usage
 
-`cd` into the src folder and run `main.py`, you should see two windows, one with your webcam feed and the other with the output. Drag the output window to your projector (if you have one setup).
+`cd` into the src folder and run `main.py`, you should see two windows, one with your webcam feed and the other with the output. Drag the output window to your projector (if you have one set up).
 
 # Things to do
 
