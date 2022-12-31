@@ -1,7 +1,11 @@
 # yarvis
 
-Yarvis is a python project in which we attempt to approximate the [hologram tech from the iron man movies](https://youtu.be/WNu6fRo_7fg) (CURRENTLY A WORK IN PROGRESS)
+Yarvis is a python project in which we attempt to approximate the hologram tech from the [iron man movies](https://youtu.be/WNu6fRo_7fg)
+(CURRENTLY A WORK IN PROGRESS)
 
+# Description
+
+This project stems from my lack of a whiteboard, and the fragile and temporary nature of sticky notes. And it's cheaper than a hololens :)
 The main idea is that since we cannot stop and manipulate light midair as seen on film, the closest thing we can do is using gesture recognition and a projector.
 Of course there are simpler ways to do this, such as microsoft's hololens, but that is a little out of our price range. But more importantly, it defeats the purpose. We don't want it to get in the way of whatever else we're doing. The reason I came up with this in the first place was so I could plan projects and set up little reminders for myself as I'm working with my hands or programming.
 
