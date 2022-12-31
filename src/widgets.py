@@ -20,8 +20,15 @@ class baseWidget:
         self.thickness = thickness
         self.originalColour = self.colour
         self.highlightBrightness = -40
-        self.highlightColour = (self.colour[0] + self.highlightBrightness, self.colour[1] + self.highlightBrightness, self.colour[2] + self.highlightBrightness)
+        self.highlightColour = self.hightlightColour(colour)
     
+    def hightlightColour(self, colour):
+        hightlightColour = []
+        for i in range(len(colour)):
+            hightlightColour.append(colour[i] + self.highlightBrightness)
+        
+        return hightlightColour
+
     # linearly interpolate between two values
     def lerp(self, starting, ending, percentage):
         return int(starting + (ending - starting) * percentage)
