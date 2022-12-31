@@ -148,9 +148,3 @@ class cursor(baseWidget):
    
     def display(self, image): # dont want the cursor to inherit all the grabbing stuff so it should have its own display function
         cv.circle(image, (self.x, self.y), self.radius, self.colour, self.thickness, cv.LINE_AA)
-        
-
-    
-
-
-

@@ -5,6 +5,7 @@ import numpy as np
 import time
 from collections import deque
 from utils import CvFpsCalc
+import os
 
 screenWidth, screenHeight = 720, 480
 outputImage = np.zeros((screenHeight, screenWidth, 3), np.uint8)
@@ -91,8 +92,6 @@ while True:
     key = cv.waitKey(10)
     if key == 27:  # ESC
         break
-    # set the previous time to the current time at the beginning of the loop
-    previousTime = time.time()
     # pass the init variables into gesture recognition, this returns hand gesture, landmark coordinates and the latest camera frame
     flag, debugImage, landmarks, currentGesture = gestureRecognition.returnGestures(cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history)
     if flag == 0:
