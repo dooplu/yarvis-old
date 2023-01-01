@@ -116,29 +116,41 @@ def saveWidgets():
         string = ""
         for widget in drawQueue:
             if widget.type == "sticky":
-                string += widget.type
-                string += "\n"
-                string += widget.text
-                string += "\n"
-                string += "{}, {}".format(widget.x, widget.y)
-                string += "\n"
-                string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
-                string += "\n\n"
+                string += appendNote(widget, string)
             elif widget.type == "circle":
-                string += widget.type
-                string += "\n"
-                string += "{}, {}".format(widget.x, widget.y)
-                string += "\n"
-                string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
-                string += "\n\n"
+                string += appendCircle(widget, string)
             elif widget.type == "square":
-                string += widget.type
-                string += "\n"
-                string += "{}, {}".format(widget.x, widget.y)
-                string += "\n"
-                string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
-                string += "\n\n"
+                string += appendSquare(widget, string)
         file.write(string)
+
+def appendNote(widget, string):
+    string += widget.type
+    string += "\n"
+    string += widget.text
+    string += "\n"
+    string += "{}, {}".format(widget.x, widget.y)
+    string += "\n"
+    string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
+    string += "\n\n"
+    return string
+
+def appendCircle(widget, string):
+    string += widget.type
+    string += "\n"
+    string += "{}, {}".format(widget.x, widget.y)
+    string += "\n"
+    string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
+    string += "\n\n"
+    return string
+
+def appendSquare(widget, string):
+    string += widget.type
+    string += "\n"
+    string += "{}, {}".format(widget.x, widget.y)
+    string += "\n"
+    string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
+    string += "\n\n"
+    return string
 
 def loadWidgets():
     if os.path.exists(".\save\save.txt"):
