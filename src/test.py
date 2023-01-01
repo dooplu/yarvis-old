@@ -1,1 +1,3 @@
-import mediapipe
+import assistant
+
+assistant.voiceRecognition()

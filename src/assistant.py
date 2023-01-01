@@ -1,6 +1,7 @@
 import speech_recognition as sr
 import pyttsx3 as tts
 import threading
+import os
 
 from neuralintents import GenericAssistant
 
@@ -10,7 +11,7 @@ def voiceRecognition():
   speaker = tts.init()
   speaker.setProperty("rate", 150)
   
-
+  colours = {"red":(0, 0, 255), "orange":(0, 150, 255), "yellow":(0, 255, 255), "green":(0, 255, 0), "blue":(255, 0, 0), "purple":(255, 0, 200)}
   
   def createNote():
     # assistent asks what to write in note
@@ -29,24 +30,35 @@ def voiceRecognition():
           audio = recognizer.listen(mic)
           
           # convert audio to text
-          note = recognizer.recognize_google(audio)
-          note = note.lower()
+          text = recognizer.recognize_google(audio)
+          text = text.lower()
           
-          speaker.say("what should i call the note?")
+          speaker.say("what color should the note be?")
           speaker.runAndWait()
           
           recognizer.adjust_for_ambient_noise(mic, duration=0.2)
           audio = recognizer.listen(mic)
           
-          filename = recognizer.recognize_google(audio)
-          filename = filename.lower()
+          colourText = recognizer.recognize_google(audio)
+          colourText = colourText.lower()
           
+          words = colourText.split(" ")
+          
+          for word in words:
+            if word in colours.keys():
+              colour = colours.get(word, "blue")
+          
+          writeString = "{}\n{},{},{}".format(text, colour[0], colour[1], colour[2])
+
+        
         # creates txt file with filename given and writes the note inside
-        with open(filename+".txt", "w") as f:
-          f.write(note)
+        with open("save/s.txt", "w") as f:
+          f.write(writeString)
           done = True
-          speaker.say(f"i have successfully created the note {filename}")
+          speaker.say(f"i have successfully created the note")
           speaker.runAndWait()
+          
+        os.rename("save/s.txt", "save/sticky.txt")
           
       # if sr does not recognize the audio it will redo the while loop    
       except sr.UnknownValueError:
@@ -66,14 +78,16 @@ def voiceRecognition():
           text = text.lower()
           
           # if hotword is found, assistent will start to listen to user
-          if "orange" in text:
+          if text == "virtual assistant":
             print("listening...")
+            speaker.say("how can i help you")
+            speaker.runAndWait()
             audio = recognizer.listen(mic)
             text = recognizer.recognize_google(audio)
             text = text.lower()
             
             # if user says stop, assistent will terminate
-            if text == "stop":
+            if "stop" in text:
               speaker.say("bye")
               speaker.runAndWait()
               break
@@ -99,9 +113,5 @@ def voiceRecognition():
   
   threading.Thread(target=runAssistant()).start()
 
-# dict to attribute every tag from json file to its method in class
-##mapping = {"note": createNote}
 
-##assistant = GenericAssistant("commands.json", intent_methods=mapping)
-
-#voiceRecognition()
+voiceRecognition()

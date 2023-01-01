@@ -1,5 +1,75 @@
-circle
-330
-198, 275
--51, -171, -111
+sticky
+test test est
+170, 60
+250, 3, 32
+
+sticky
+test test est
+170, 60
+250, 3, 32
+
+sticky
+this is my first note
+465, 97
+0, 255, 0
+
+sticky
+test test est
+170, 60
+250, 3, 32
+
+sticky
+test test est
+170, 60
+250, 3, 32
+
+sticky
+this is my first note
+465, 97
+0, 255, 0
+
+sticky
+make sure to complete your business today
+367, 375
+0, 0, 255
+
+sticky
+test test est
+170, 60
+250, 3, 32
+
+sticky
+test test est
+170, 60
+250, 3, 32
+
+sticky
+this is my first note
+465, 97
+0, 255, 0
+
+sticky
+test test est
+170, 60
+250, 3, 32
+
+sticky
+test test est
+170, 60
+250, 3, 32
+
+sticky
+this is my first note
+465, 97
+0, 255, 0
+
+sticky
+make sure to complete your business today
+367, 375
+0, 0, 255
+
+sticky
+we are going to be academic weapons next semester new line this is a test new line the street above me is probably very long
+354, 206
+-40, 210, 215
 

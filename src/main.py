@@ -6,11 +6,6 @@ from collections import deque
 from utils import CvFpsCalc
 import os
 
-#import os
-#import multiprocessing
-#import threading
-#from assistantFolder import assistant
-
 
 screenWidth, screenHeight = 720, 480
 outputImage = np.zeros((screenHeight, screenWidth, 3), np.uint8)
@@ -161,7 +156,7 @@ def loadWidgets():
                 elif widgetType == "square":
                     loadSquare(parameters)
 
-        os.remove(".\save\save.txt")
+        #os.remove(".\save\save.txt")
 
 def loadSticky(parameters):
     text = parameters[1]
@@ -179,8 +174,8 @@ def loadCircle(parameters):
     colour = parameters[3].split(",")
     position = list(map(int, position))
     colour = list(map(int, colour))
-    print(radius)
-    newNote = widgets.circle(position[0], position[1], radius, colour)
+
+    newNote = widgets.circle(radius, position[0], position[1], colour)
     drawQueue.append(newNote)
 
 def loadSquare(parameters):
@@ -198,26 +193,6 @@ def loadSquare(parameters):
 # initialize the hand tracking and gesture recognition
 cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history = gestureRecognition.init(1)
 
-
-#def runBG():
-    
-    # dict to attribute every tag from json file to its method in class
-    #mapping = {"note": createNote}
-
-    #assistantmodel = assistant.GenericAssistant("commands.json", intent_methods=mapping)
-
-    ##################################################################################################
-    #assistant.train_model()
-    #assistant.save_model()
-    #assistantmodel.load_model()
-
-    #assistant.init()
-
-    # starts a thread
-    #threading.Thread(target=assistant.runAssistant()).start()
-
-#p = multiprocessing.Process(target=runBG)
-#p.start()
 
 loadWidgets()
 
