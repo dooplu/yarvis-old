@@ -2,15 +2,14 @@ import widgets
 import gestureRecognition
 import cv2 as cv
 import numpy as np
-import time
 from collections import deque
 from utils import CvFpsCalc
 import os
 
-import os
-import multiprocessing
-import threading
-from assistantFolder import assistant
+#import os
+#import multiprocessing
+#import threading
+#from assistantFolder import assistant
 
 
 screenWidth, screenHeight = 720, 480
@@ -125,22 +124,41 @@ def saveWidgets():
                 string += "\n"
                 string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
                 string += "\n\n"
-        
+            elif widget.type == "circle":
+                string += widget.type
+                string += "\n"
+                string += "{}, {}".format(widget.x, widget.y)
+                string += "\n"
+                string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
+                string += "\n\n"
+            elif widget.type == "square":
+                string += widget.type
+                string += "\n"
+                string += "{}, {}".format(widget.x, widget.y)
+                string += "\n"
+                string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
+                string += "\n\n"
         file.write(string)
+
+def loadWidgets():
+    if os.path.exists(".\save\save.txt"):
+        os.remove(".\save\save.txt")
+
 
 # initialize the hand tracking and gesture recognition
 cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history = gestureRecognition.init(1)
 
 
-def runBG():
-    
-    os.chdir('./assistantFolder')
-    print(os.getcwd())
-    exec(open("assistant.py").read())
+#def runBG():
+#    
+#    os.chdir('./assistantFolder')
+#    print(os.getcwd())
+#    exec(open("assistant.py").read())
+#
+#p = multiprocessing.Process(target=runBG)
+#p.start()
 
-p = multiprocessing.Process(target=runBG)
-p.start()
-
+loadWidgets()
 
 # main loop
 while True:
