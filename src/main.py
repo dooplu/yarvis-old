@@ -124,6 +124,8 @@ def appendNote(widget, string):
 def appendCircle(widget, string):
     string += widget.type
     string += "\n"
+    string += str(widget.radius)
+    string += "\n"
     string += "{}, {}".format(widget.x, widget.y)
     string += "\n"
     string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
@@ -134,6 +136,8 @@ def appendSquare(widget, string):
     string += widget.type
     string += "\n"
     string += "{}, {}".format(widget.x, widget.y)
+    string += "\n"
+    string += "{}, {}".format(widget.width, widget.height)
     string += "\n"
     string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
     string += "\n\n"
