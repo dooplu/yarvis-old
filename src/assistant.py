@@ -27,7 +27,7 @@ def voiceRecognition():
           # duration allowed for moment of silence
           recognizer.adjust_for_ambient_noise(mic, duration=0.2)
           # listening to audio
-          audio = recognizer.listen(mic)
+          audio = recognizer.listen(mic, None)
           
           # convert audio to text
           text = recognizer.recognize_google(audio)
@@ -37,7 +37,7 @@ def voiceRecognition():
           speaker.runAndWait()
           
           recognizer.adjust_for_ambient_noise(mic, duration=0.2)
-          audio = recognizer.listen(mic)
+          audio = recognizer.listen(mic, None, 2.5)
           
           colourText = recognizer.recognize_google(audio)
           colourText = colourText.lower()
@@ -72,7 +72,7 @@ def voiceRecognition():
       try:
         with sr.Microphone() as mic:
           recognizer.adjust_for_ambient_noise(mic, duration=0.2)
-          audio = recognizer.listen(mic)
+          audio = recognizer.listen(mic, None, 2)
           
           text = recognizer.recognize_google(audio)
           text = text.lower()
@@ -82,7 +82,7 @@ def voiceRecognition():
             print("listening...")
             speaker.say("how can i help you")
             speaker.runAndWait()
-            audio = recognizer.listen(mic)
+            audio = recognizer.listen(mic, None, 5)
             text = recognizer.recognize_google(audio)
             text = text.lower()
             
