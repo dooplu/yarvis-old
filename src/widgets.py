@@ -120,7 +120,7 @@ class postIt(square):
         self.type = "sticky"
 
     def display(self, image, cursorX, cursorY, gesture):
-        lines = self.text.splitlines() # put text does not support new lines, so we split into individual lines
+        lines = self.text.split("new line") # put text does not support new lines, so we split into individual lines
         lineSizes = [] # store the pixel widths of each line of text
         lineHeight = 0 
         for i in range(len(lines)): # find the pixel width of each line 

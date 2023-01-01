@@ -92,22 +92,9 @@ def createNote():
     with open(".\save\sticky.txt") as file:
         parameters = file.read().splitlines() # every line of the file is a paramter
         text = parameters[0] # first line is the text of the note
-        colour = parameters[1].split(",") # the second is the colour for the background
-
-        text = text.split(" ") # turn the text string into an array demarkated by the spaces...
-        string = ""
-        for i in range(len(text)): # ... we do this because we want to recognize the command for a new line, and replace it accordingly
-            word = text[i]
-            if word == "new" and text[i+1] == "line": 
-                string += "\n"
-                continue
-            elif word == "line" and text[i-1] == "new":
-                continue 
-            string += word + " "
-        
+        colour = parameters[1].split(",") # the second is the colour for the background       
         colour = list(map(int, colour)) # the variable colour is a list of strings, we need to cast each element as an integer
-
-        note = widgets.postIt(string, screenWidth//2, screenHeight//2, colour) # create a new postit object and assign it to this variable
+        note = widgets.postIt(text, screenWidth//2, screenHeight//2, colour) # create a new postit object and assign it to this variable
     os.remove(".\save\sticky.txt") # when we're done getting the info from the file, delete it
     return note # return this note to be used in the draw queue
 
