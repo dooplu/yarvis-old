@@ -21,6 +21,7 @@ class baseWidget:
         self.originalColour = self.colour
         self.highlightBrightness = -40
         self.highlightColour = self.hightlightColour(colour)
+        self.type = "base"
     
     def hightlightColour(self, colour):
         hightlightColour = []
@@ -80,6 +81,7 @@ class circle(baseWidget):
     def __init__(self, x, y, radius, colour, thickness):
         super().__init__(x, y, colour, thickness)
         self.radius = radius
+        self.type = "circle"
         
     def display(self, image, cursorX, cursorY, gesture):
         self.grab(cursorX, cursorY, gesture)
@@ -92,6 +94,7 @@ class square(baseWidget):
         self.width = width
         self.height = height
         self.radius = 0 # this is so the grabbing function can identify which hover function to use
+        self.type = "square"
 
     def display(self, image, cursorX, cursorY, currentGesture):
         # i prefer to use the center coordinates of the rectangl,e...
@@ -113,7 +116,8 @@ class postIt(square):
         self.text = text
         self.originalColour = colour
         self.highlightBrightness = -40
-        self.highlightColour = (colour[0] + self.highlightBrightness, colour[1] + self.highlightBrightness, colour[2] + self.highlightBrightness)
+        self.highlightColour = self.hightlightColour(colour)
+        self.type = "sticky"
 
     def display(self, image, cursorX, cursorY, gesture):
         lines = self.text.splitlines() # put text does not support new lines, so we split into individual lines

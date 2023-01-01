@@ -16,10 +16,6 @@ smoothGestureThreshold = 0.5 # play with this, affects gesture smoothing
 cvFpsCalc = CvFpsCalc(buffer_len=10)
 
 cursor = widgets.cursor(0, 0, 15, (255, 146, 74), 3)
-test = widgets.circle(300, 300, 50, (40, 250, 95), -1)
-test1 = widgets.circle(100, 100, 50, (0, 0, 230), -1)
-test2 = widgets.square(600, 300, 100, 150, (255, 255, 255), -1)
-note = widgets.postIt("test\ntest\ntest", 300, 300, (255, 0, 0))
 
 # creates a blank frame 
 def clearFrame(image):
@@ -89,28 +85,42 @@ def drawFps(image, fps):
 def createNote():
     note = None
     with open(".\save\sticky.txt") as file:
-        parameters = file.read().splitlines()
-        text = parameters[0] 
-        colour = parameters[1].split(",")
+        parameters = file.read().splitlines() # every line of the file is a paramter
+        text = parameters[0] # first line is the text of the note
+        colour = parameters[1].split(",") # the second is the colour for the background
 
-        text = text.split(" ")
+        text = text.split(" ") # turn the text string into an array demarkated by the spaces...
         string = ""
-        for i in range(len(text)):
+        for i in range(len(text)): # ... we do this because we want to recognize the command for a new line, and replace it accordingly
             word = text[i]
-            
-            if word == "new" and text[i+1] == "line":
+            if word == "new" and text[i+1] == "line": 
                 string += "\n"
                 continue
             elif word == "line" and text[i-1] == "new":
                 continue 
             string += word + " "
         
-        colour = list(map(int, colour))
+        colour = list(map(int, colour)) # the variable colour is a list of strings, we need to cast each element as an integer
 
-        note = widgets.postIt(string, screenWidth//2, screenHeight//2, colour)
-    os.remove(".\save\sticky.txt")
-    return note
+        note = widgets.postIt(string, screenWidth//2, screenHeight//2, colour) # create a new postit object and assign it to this variable
+    os.remove(".\save\sticky.txt") # when we're done getting the info from the file, delete it
+    return note # return this note to be used in the draw queue
 
+def saveWidgets():
+    with open(".\save\save.txt", "w") as file:
+        string = ""
+        for widget in drawQueue:
+            if widget.type == "sticky":
+                string += widget.type
+                string += "\n"
+                string += widget.text
+                string += "\n"
+                string += "{}, {}".format(widget.x, widget.y)
+                string += "\n"
+                string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
+                string += "\n\n"
+        
+        file.write(string)
 
 # initialize the hand tracking and gesture recognition
 cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history = gestureRecognition.init(1)
@@ -148,4 +158,6 @@ while True:
     cv.imshow('output', outputImage)
 
 cap.release()
-cv.destroyAllWindows()    
+cv.destroyAllWindows()
+
+saveWidgets()
