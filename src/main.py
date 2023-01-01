@@ -200,11 +200,22 @@ cap, hands, point_history, keypoint_classifier, point_history_classifier, histor
 
 
 #def runBG():
-#    
-#    os.chdir('./assistantFolder')
-#    print(os.getcwd())
-#    exec(open("assistant.py").read())
-#
+    
+    # dict to attribute every tag from json file to its method in class
+    #mapping = {"note": createNote}
+
+    #assistantmodel = assistant.GenericAssistant("commands.json", intent_methods=mapping)
+
+    ##################################################################################################
+    #assistant.train_model()
+    #assistant.save_model()
+    #assistantmodel.load_model()
+
+    #assistant.init()
+
+    # starts a thread
+    #threading.Thread(target=assistant.runAssistant()).start()
+
 #p = multiprocessing.Process(target=runBG)
 #p.start()
 
