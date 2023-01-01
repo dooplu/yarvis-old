@@ -161,7 +161,7 @@ def loadWidgets():
                 elif widgetType == "square":
                     loadSquare(parameters)
 
-        #os.remove(".\save\save.txt")
+        os.remove(".\save\save.txt")
 
 def loadSticky(parameters):
     text = parameters[1]
@@ -179,8 +179,8 @@ def loadCircle(parameters):
     colour = parameters[3].split(",")
     position = list(map(int, position))
     colour = list(map(int, colour))
-
-    newNote = widgets.circle(radius, position[0], position[1], colour)
+    print(radius)
+    newNote = widgets.circle(position[0], position[1], radius, colour)
     drawQueue.append(newNote)
 
 def loadSquare(parameters):
