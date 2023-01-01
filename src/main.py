@@ -89,7 +89,7 @@ def drawFps(image, fps):
 
 def createNote():
     note = None
-    with open(".\save\sticky.txt") as file:
+    with open(".\save\sticky.txt", "r") as file:
         parameters = file.read().splitlines() # every line of the file is a paramter
         text = parameters[0] # first line is the text of the note
         colour = parameters[1].split(",") # the second is the colour for the background       
@@ -103,14 +103,14 @@ def saveWidgets():
         string = ""
         for widget in drawQueue:
             if widget.type == "sticky":
-                string += appendNote(widget, string)
+                string += appendSticky(widget, string)
             elif widget.type == "circle":
                 string += appendCircle(widget, string)
             elif widget.type == "square":
                 string += appendSquare(widget, string)
         file.write(string)
 
-def appendNote(widget, string):
+def appendSticky(widget, string):
     string += widget.type
     string += "\n"
     string += widget.text
@@ -135,9 +135,9 @@ def appendCircle(widget, string):
 def appendSquare(widget, string):
     string += widget.type
     string += "\n"
-    string += "{}, {}".format(widget.x, widget.y)
-    string += "\n"
     string += "{}, {}".format(widget.width, widget.height)
+    string += "\n"
+    string += "{}, {}".format(widget.x, widget.y)
     string += "\n"
     string += "{}, {}, {}".format(widget.colour[0], widget.colour[1], widget.colour[2])
     string += "\n\n"
@@ -145,7 +145,54 @@ def appendSquare(widget, string):
 
 def loadWidgets():
     if os.path.exists(".\save\save.txt"):
-        os.remove(".\save\save.txt")
+        widgets = []
+        with open(".\save\save.txt", "r") as file:
+            saveData = file.read()
+            widgets = saveData.split("\n\n")
+            for widget in widgets:
+                if widget == "":
+                    continue
+                parameters = widget.splitlines()
+                widgetType = parameters[0]
+                if widgetType == "sticky":
+                    loadSticky(parameters)
+                elif widgetType == "circle":
+                    loadCircle(parameters)
+                elif widgetType == "square":
+                    loadSquare(parameters)
+
+        #os.remove(".\save\save.txt")
+
+def loadSticky(parameters):
+    text = parameters[1]
+    position = parameters[2].split(",")
+    colour = parameters[3].split(",")
+    position = list(map(int, position))
+    colour = list(map(int, colour))
+
+    newNote = widgets.postIt(text, position[0], position[1], colour)
+    drawQueue.append(newNote)
+
+def loadCircle(parameters):
+    radius = int(parameters[1])
+    position = parameters[2].split(",")
+    colour = parameters[3].split(",")
+    position = list(map(int, position))
+    colour = list(map(int, colour))
+
+    newNote = widgets.circle(radius, position[0], position[1], colour)
+    drawQueue.append(newNote)
+
+def loadSquare(parameters):
+    size = parameters[1].split(",")
+    position = parameters[2].split(",")
+    colour = parameters[3].split(",")
+    size = list(map(int, size))
+    position = list(map(int, position))
+    colour = list(map(int, colour))
+
+    newNote = widgets.square(position[0], position[1], size[0], size[1], colour)
+    drawQueue.append(newNote)
 
 
 # initialize the hand tracking and gesture recognition

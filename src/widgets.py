@@ -11,7 +11,7 @@ class baseWidget:
 
     movementSmoothing = 0.15
 
-    def __init__(self, x, y, colour, thickness):
+    def __init__(self, x, y, colour, thickness=-1):
         self.x = x
         self.y = y
         self.grabbingBefore = False
@@ -78,7 +78,7 @@ class baseWidget:
 
 
 class circle(baseWidget):
-    def __init__(self, x, y, radius, colour, thickness):
+    def __init__(self, x, y, radius, colour, thickness=-1):
         super().__init__(x, y, colour, thickness)
         self.radius = radius
         self.type = "circle"
@@ -89,7 +89,7 @@ class circle(baseWidget):
 
 
 class square(baseWidget):
-    def __init__(self, x, y, width, height, colour, thickness):
+    def __init__(self, x, y, width, height, colour, thickness=-1):
         super().__init__(x, y, colour, thickness)
         self.width = width
         self.height = height
