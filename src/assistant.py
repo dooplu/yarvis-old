@@ -72,7 +72,7 @@ def voiceRecognition():
       try:
         with sr.Microphone() as mic:
           recognizer.adjust_for_ambient_noise(mic, duration=0.2)
-          audio = recognizer.listen(mic, None, 2)
+          audio = recognizer.listen(mic, None, 5)
           
           text = recognizer.recognize_google(audio)
           text = text.lower()
@@ -88,7 +88,7 @@ def voiceRecognition():
             
             # if user says stop, assistent will terminate
             if "stop" in text:
-              speaker.say("bye")
+              speaker.say("Have a good day")
               speaker.runAndWait()
               break
             
