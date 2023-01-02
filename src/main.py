@@ -51,7 +51,7 @@ def draw(image, cursorX, cursorY, gesture, gestureHistory):
     # clear the frame at the beginning of every draw loop
     image = clearFrame(image)
     if os.path.exists(".\save\sticky.txt"):
-        drawQueue.append(createNote()) # create a new note if one has been created by the voice assistant
+        createNote() # create a new note if one has been created by the voice assistant
 
     if len(drawQueue) > 0:
         for widget in drawQueue:
@@ -91,19 +91,26 @@ def createNote():
         colour = list(map(int, colour)) # the variable colour is a list of strings, we need to cast each element as an integer
         note = widgets.postIt(text, screenWidth//2, screenHeight//2, colour) # create a new postit object and assign it to this variable
     os.remove(".\save\sticky.txt") # when we're done getting the info from the file, delete it
-    return note # return this note to be used in the draw queue
+    drawQueue.append(note) # return this note to be used in the draw queue
 
 def saveWidgets():
+    if len(drawQueue) < 1:
+        return
+
     with open(".\save\save.txt", "w") as file:
-        string = ""
+        saveString = ""
         for widget in drawQueue:
+            print(widget)
             if widget.type == "sticky":
-                string += appendSticky(widget, string)
+                saveString = appendSticky(widget, saveString)
             elif widget.type == "circle":
-                string += appendCircle(widget, string)
+                saveString = appendCircle(widget, saveString)
             elif widget.type == "square":
-                string += appendSquare(widget, string)
-        file.write(string)
+                saveString = appendSquare(widget, saveString)
+            #print("saved {}".format(widget.type))
+
+        file.write(saveString)
+        
 
 def appendSticky(widget, string):
     string += widget.type
@@ -155,6 +162,7 @@ def loadWidgets():
                     loadCircle(parameters)
                 elif widgetType == "square":
                     loadSquare(parameters)
+                print("loaded {}".format(widgetType))
 
         #os.remove(".\save\save.txt")
 
@@ -175,7 +183,7 @@ def loadCircle(parameters):
     position = list(map(int, position))
     colour = list(map(int, colour))
 
-    newNote = widgets.circle(radius, position[0], position[1], colour)
+    newNote = widgets.circle(position[0], position[1], radius, colour)
     drawQueue.append(newNote)
 
 def loadSquare(parameters):
@@ -190,11 +198,10 @@ def loadSquare(parameters):
     drawQueue.append(newNote)
 
 
+loadWidgets()
+
 # initialize the hand tracking and gesture recognition
 cap, hands, point_history, keypoint_classifier, point_history_classifier, history_length, finger_gesture_history = gestureRecognition.init(1)
-
-
-loadWidgets()
 
 # main loop
 while True:
@@ -228,6 +235,7 @@ while True:
     cv.imshow('debug', debugImage)
     cv.imshow('output', outputImage)
 
+saveWidgets()
+
 cap.release()
 cv.destroyAllWindows()    
-saveWidgets()
