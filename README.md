@@ -2,7 +2,7 @@
 
 Yarvis is a python project in which we attempt to approximate the hologram tech from the [iron man movies](https://youtu.be/WNu6fRo_7fg)
 
-(work in progress)
+![yarvis in action](https://github.com/dooplu/yarvis/blob/main/showcase.gif)
 
 # Description
 
@@ -41,6 +41,8 @@ Open two terminals, in each of them activate the virtual environment.
 `cd` into the src folder on both terminals and run `main.py` and `assistant.py`, you should see two windows, one with your webcam feed and the other with the output window, as well as a terminal output showing what you are saying. Drag the output window to your projector (if you have one set up).
 
 To create a new sticky note, say out loud "virtual assistant" and wait for a response. After the virtual assistant responds with "How can I help you?", tell it "write a note", "write me a note", "make a note" or some variation of that sentence. You will be asked what do you want there to be written on the note, it will stop when you stop. Additionally, you can say "new line" to add a linebreak. You will then be prompted for a colour. You can repond with "the colour " plus any of the following colours: red, orange, yellow, green, blue, purple.
+
+To manipulate objects on screen, move your hand to the desired location (a cursor will help you indicate where your hand is). When you are on an object that you wish to move, close your hand into a pinching gesture (see gif for reference) and drag the object while holding that motion. When you want to let go and leave the object there, open your hand completely and move the cursor away. We are aware that occasionally it may be janky, so be sure to make your hand gestures obvious. Additionally, the background and your hand have a good contrast.
 
 Try not to let two widgets overlap, we have not implemented only grabbing one object at a time, so if you do this, they will become stuck ontop of each other, making it hard or even impossible to seperate them. 
 
