@@ -48,7 +48,11 @@ To end the programs, simply press escape with either the camera feed or output w
 
 We understand this is an odd way to operate, however, we found it impossible to get both programs to run from one file concurrently.
 
-# Things to do
+# Things to do / What we learned
+
+- This was our biggest programming project so far. A lot of features we wanted to implement had to be scrapped just for the sake of finishing (such as drawing and displaying the weather). Additionally, it is not organized in the most elegant way possible. In the future, we should take alot of time to plan an adequate file hierarchy, but this isn't to say that we haven't learned immensively since we embarked on this endeavour.
+- We plan on either revisiting and improving in the future, or making a version 2. Progress was heavily slowed down by the fact that alot of the UI systems had to be made from scratch as we thought OpenCV's graphics capabilities were sufficient for our needs (we were wrong), however this gave us alot of insight on how to build software systems from the ground up.
+- Obtaining a projector
 
 See our [Trello](https://trello.com/b/HLfzcOHO/yarvis)
 
