@@ -36,17 +36,26 @@ pip install -r requirements.txt
 
 # Usage
 
-`cd` into the src folder and run `main.py`, you should see two windows, one with your webcam feed and the other with the output. Drag the output window to your projector (if you have one set up).
+Open two terminals, in each of them activate the virtual environment. 
 
-# Things to do
+`cd` into the src folder on both terminals and run `main.py` and `assistant.py`, you should see two windows, one with your webcam feed and the other with the output window, as well as a terminal output showing what you are saying. Drag the output window to your projector (if you have one set up).
 
-- Get Yusuf's audio assistant to interact with note taking. This was really one of the first things that even inspired me to do this project, I had so many stickynotes around my office at one point and they'd fall off, be hard to modify, crumple etc. So I asked myself, what if I had digital sticky notes? And here we are. This is very close to being done, but because as you'll see in later points, alot of work had to be done before this could even be attempted.
-- Drawing in air. This is the other main reason I started this project. I do not own a white board, I would like one. But what if I could make a cooler one for free? (free up until I buy a projector...). This project is essentially a workflow tool, for jotting down ideas quickly along with some goodies. 
-- Fix the requirements.txt file, currently it has all the dependencies of the main like 5 packages we initially used.
-- Refactor alot of the code, this is the biggest project we've tackled so far and we learned so much, there's alot I (Adam) would like to move around and redo
-- Ideally, make a version 2. Python is good for all the machine learning and gesture recognition stuff, but it's limited in the graphics aspect, a version 2 would entail sending all the hand information to something like unity, where time would not be wasted on making a lot of common functionality from scratch (like a lerp function)
+To create a new sticky note, say out loud "virtual assistant" and wait for a response. After the virtual assistant responds with "How can I help you?", tell it "write a note", "write me a note", "make a note" or some variation of that sentence. You will be asked what do you want there to be written on the note, it will stop when you stop. Additionally, you can say "new line" to add a linebreak. You will then be prompted for a colour. You can repond with "the colour " plus any of the following colours: red, orange, yellow, green, blue, purple.
 
-See our [Trello](https://trello.com/b/HLfzcOHO/yarvis) for more.
+Try not to let two widgets overlap, we have not implemented only grabbing one object at a time, so if you do this, they will become stuck ontop of each other, making it hard or even impossible to seperate them. 
+
+To end the programs, simply press escape with either the camera feed or output window open. And for the virtual assistant, call it with "virtual assistant", and say some variation of "stop the program" (command should include the world stop).
+
+We understand this is an odd way to operate, however, we found it impossible to get both programs to run from one file concurrently.
+
+# Things to do / What we learned
+
+- This was our biggest programming project so far. A lot of features we wanted to implement had to be scrapped just for the sake of finishing (such as drawing and displaying the weather). Additionally, it is not organized in the most elegant way possible. In the future, we should take alot of time to plan an adequate file hierarchy, but this isn't to say that we haven't learned immensively since we embarked on this endeavour.
+- We plan on either revisiting and improving in the future, or making a version 2. Progress was heavily slowed down by the fact that alot of the UI systems had to be made from scratch as we thought OpenCV's graphics capabilities were sufficient for our needs (we were wrong), however this gave us alot of insight on how to build software systems from the ground up.
+- Obtaining a projector
+
+See our [Trello](https://trello.com/b/HLfzcOHO/yarvis)
+
 # Credit
 Getting the hand gestures is done with the help of Kazuhito00's [gesture recognition with mediapipe](https://github.com/Kazuhito00/hand-gesture-recognition-using-mediapipe)
 
