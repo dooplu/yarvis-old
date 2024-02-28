@@ -3,7 +3,7 @@
 Yarvis is a python project in which we attempt to approximate the hologram tech from the [iron man movies](https://youtu.be/WNu6fRo_7fg)
 
 ![yarvis in action](https://github.com/dooplu/yarvis/blob/main/showcase.gif)
-The showcase gif might take a while to load, for an immediate demonstration check out the [showcase.gif](https://github.com/dooplu/yarvis/blob/main/showcase.gif) on our GitHub repository
+The showcase gif might take a while to load, for an immediate demonstration check out the [showcase.gif](https://github.com/dooplu/yarvis-old/blob/main/showcase.gif) on our GitHub repository
 
 # Description
 
